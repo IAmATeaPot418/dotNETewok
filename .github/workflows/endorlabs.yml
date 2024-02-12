@@ -36,6 +36,7 @@ jobs:
            dotnet-version: |
              7.0.x
            cache: true
+           cache-dependency-path: dotNETewok.Website/packages.lock.json
            
         - name: Restore .NET
           run: dotnet restore --use-lock-file && dotnet build
