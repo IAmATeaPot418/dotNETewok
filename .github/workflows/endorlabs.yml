@@ -56,10 +56,10 @@ jobs:
             pr_incremental: "true"
             
         - name: Endor Labs Workflow Dispatch
-          if: ${{ github.event_name == 'workflow_dispatch' }} || ${{ github.event_name == 'push' }} 
+          if: ${{ github.event_name == 'workflow_dispatch' }}
           uses: endorlabs/github-action@pr-incremental
           with:
-            namespace: ${{ github.event.inputs.tenant_name }}
+            namespace: "yolo"
             scan_summary_output_type: "table"
             pr: "false"
             enable_github_action_token: "true"
