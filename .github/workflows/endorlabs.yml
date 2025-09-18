@@ -1,5 +1,6 @@
 name: Endor Labs Scan
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       api:
@@ -40,10 +41,23 @@ jobs:
            
         - name: Restore .NET
           run: dotnet restore --use-lock-file && dotnet build
+
+        - name: Endor Labs Pull Request
+          if: ${{ github.event_name == 'pull_request' }}
+          uses: endorlabs/github-action@pr-incremental
+          with:
+            namespace: "yolo"
+            scan_summary_output_type: "table"
+            pr: "false"
+            enable_github_action_token: "true"
+            scan_dependencies: "true"
+            scan_secrets: "true"
+            scan_git_logs: "true"
+            pr_incremental: "true"
             
         - name: Endor Labs Workflow Dispatch
-          if: ${{ github.event_name == 'workflow_dispatch' }}
-          uses: endorlabs/github-action@736c93ea52b002f2ac229aaeb273b102cbf6fe12
+          if: ${{ github.event_name == 'workflow_dispatch' }} || ${{ github.event_name == 'push' }} 
+          uses: endorlabs/github-action@pr-incremental
           with:
             namespace: ${{ github.event.inputs.tenant_name }}
             scan_summary_output_type: "table"
@@ -52,4 +66,4 @@ jobs:
             scan_dependencies: "true"
             scan_secrets: "true"
             scan_git_logs: "true"
-            additional_args: "--as-default-branch --api=${{ github.event.inputs.api }}"
+            pr_incremental: "true"
