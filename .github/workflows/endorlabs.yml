@@ -66,4 +66,4 @@ jobs:
             scan_dependencies: "true"
             scan_secrets: "true"
             scan_git_logs: "true"
-            pr_incremental: "true"
+            pr_incremental: "false"
